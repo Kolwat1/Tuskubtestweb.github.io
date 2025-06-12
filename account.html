@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>จัดการบัญชี</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .action-btn {
+      background-color: #ffc107;
+      color: white;
+      padding: 6px 12px;
+      margin: 0 5px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .action-btn.delete {
+      background-color: #dc3545;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>จัดการบัญชีผู้ใช้งาน</h1>
+  <button class="btn" onclick="addAccount()">➕ เพิ่มบัญชี</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ชื่อผู้ใช้</th>
+        <th>อีเมล</th>
+        <th>สถานะ</th>
+        <th>การจัดการ</th>
+      </tr>
+    </thead>
+    <tbody id="userTable">
+      <!-- รายการบัญชีจะถูกแสดงที่นี่ -->
+    </tbody>
+  </table>
+
+  <script>
+    // ตัวอย่างข้อมูลบัญชี
+    let users = [
+      { username: "admin", email: "admin@example.com", status: "ผู้ดูแลระบบ" },
+      { username: "user1", email: "user1@example.com", status: "ผู้ใช้งานทั่วไป" }
+    ];
+
+    function renderUsers() {
+      const table = document.getElementById("userTable");
+      table.innerHTML = "";
+
+      users.forEach((user, index) => {
+        table.innerHTML += `
+          <tr>
+            <td>${user.username}</td>
+            <td>${user.email}</td>
+            <td>${user.status}</td>
+            <td>
+              <button class="action-btn" onclick="editUser(${index})">แก้ไข</button>
+              <button class="action-btn delete" onclick="deleteUser(${index})">ลบ</button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    function addAccount() {
+      const username = prompt("ชื่อผู้ใช้:");
+      const email = prompt("อีเมล:");
+      const status = prompt("สถานะ (ผู้ใช้งานทั่วไป / ผู้ดูแลระบบ):");
+
+      if (username && email && status) {
+        users.push({ username, email, status });
+        renderUsers();
+      }
+    }
+
+    function editUser(index) {
+      const user = users[index];
+      const username = prompt("แก้ไขชื่อผู้ใช้:", user.username);
+      const email = prompt("แก้ไขอีเมล:", user.email);
+      const status = prompt("แก้ไขสถานะ:", user.status);
+
+      if (username && email && status) {
+        users[index] = { username, email, status };
+        renderUsers();
+      }
+    }
+
+    function deleteUser(index) {
+      if (confirm("คุณแน่ใจหรือไม่ว่าต้องการลบบัญชีนี้?")) {
+        users.splice(index, 1);
+        renderUsers();
+      }
+    }
+
+    // แสดงข้อมูลตอนโหลดหน้า
+    renderUsers();
+  </script>
+
+</body>
+  </html>
