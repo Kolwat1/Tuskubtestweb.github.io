@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Dashboard</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f9f9f9;
+      padding: 20px;
+    }
+    .logout {
+      float: right;
+      background: #dc3545;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<button class="logout" onclick="logout()">Logout</button>
+<h1>ยินดีต้อนรับสู่ระบบหลังบ้าน</h1>
+<p>คุณสามารถเพิ่มฟีเจอร์ได้ที่นี่ เช่น จัดการผู้ใช้ ดูรหัส ตรวจสอบข้อมูล ฯลฯ</p>
+
+<script>
+  // ป้องกันการเข้าตรง
+  if (localStorage.getItem("isLoggedIn") !== "true") {
+    window.location.href = "login.html";
+  }
+
+  function logout() {
+    localStorage.removeItem("isLoggedIn");
+    window.location.href = "login.html";
+  }
+</script>
+
+</body>
+</html>
